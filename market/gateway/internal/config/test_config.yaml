@@ -1,0 +1,12 @@
+proxies:
+  - url: test_1_url
+    endpint: test_1_endpoint # static
+  - url: test_2_url
+    endpint: test_2_endpoint # static
+
+server:
+  address: "0.0.0.0:8080"
+  readtimeout: 5s        
+  writetimeout: 10s      
+  shutdowntime: 15s      
+    
