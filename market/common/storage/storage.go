@@ -1,10 +1,10 @@
-package rqstorage
+package storage
 
 import (
 	"database/sql"
 	"fmt"
 
-	_ "github.com/go-sql-driver/mysql"
+	_ "github.com/lib/pq"
 )
 
 type DbInfo struct {
@@ -13,6 +13,7 @@ type DbInfo struct {
 	Login string `json:"login" yaml:"login"`
 	Pass  string `json:"pass" yaml:"pass"`
 	Db    string `json:"db" yaml:"db"`
+	SSL   string `json:"sslmode" yaml:"sslmode"` // "disable", "require", "verify-full"
 }
 
 type DataBase struct {
@@ -33,15 +34,22 @@ func (d *DataBase) Close() {
 }
 
 func connectToDB(info DbInfo) (*sql.DB, error) {
-	dsn := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s", info.Login, info.Pass, info.Host, info.Port, info.Db)
+	dsn := fmt.Sprintf(
+		"host=%s port=%s user=%s password=%s dbname=%s sslmode=%s",
+		info.Host,
+		info.Port,
+		info.Login,
+		info.Pass,
+		info.Db,
+		info.SSL,
+	)
 
-	db, err := sql.Open("mysql", dsn)
+	db, err := sql.Open("postgres", dsn)
 	if err != nil {
 		return nil, err
 	}
 
-	err = db.Ping()
-	if err != nil {
+	if err := db.Ping(); err != nil {
 		return nil, err
 	}
 

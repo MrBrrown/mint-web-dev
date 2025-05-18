@@ -2,10 +2,13 @@ package config
 
 import (
 	"log"
+	"market/common/storage"
 	"market/common/yamlconf"
 )
 
 type Config struct {
+	DB      storage.DbInfo `yaml:"db"`
+	BinAddr string         `yaml:"bin_addr"`
 }
 
 func New(path string) *Config {

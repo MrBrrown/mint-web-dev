@@ -1,0 +1,9 @@
+bin_addr: :8088
+
+db:
+  host: produts_db
+  port: 5432
+  login: user
+  pass: pass
+  db: produts
+  sslmode: disable

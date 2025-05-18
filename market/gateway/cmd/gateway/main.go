@@ -12,7 +12,7 @@ import (
 )
 
 func main() {
-	cfgFile := os.Getenv("GATEWAY_CONFIG")
+	cfgFile := os.Getenv("SERVICE_CONFIG_PATH")
 	cfg := &config.Config{}
 	err := yamlconf.Load(cfgFile, cfg)
 	if err != nil {
@@ -25,8 +25,14 @@ func main() {
 	}
 
 	corsCfg := server.CORSConfig{
-		AllowedOrigins:   []string{"*"},
-		AllowedMethods:   []string{"GET", "POST", "OPTIONS"},
+		AllowedOrigins: []string{"*"},
+		AllowedMethods: []string{
+			"GET",
+			"POST",
+			"PUT",
+			"DELETE",
+			"OPTIONS",
+		},
 		AllowedHeaders:   []string{"Content-Type", "application/json"},
 		AllowCredentials: true,
 

@@ -5,7 +5,32 @@ services:
         dockerfile: ./gateway/Dockerfile
       container_name: gateway
       environment:
-        GATEWAY_CONFIG: ./configs/config.yaml
+        SERVICE_CONFIG_PATH: ./configs/config.yaml
       ports:
       - "8080:8080"
       restart: "no"
+
+  product:
+      build:
+        context: ./market
+        dockerfile: ./product_service/Dockerfile
+      container_name: product_service
+      environment:
+        SERVICE_CONFIG_PATH: ./configs/config.yaml
+      restart: "no"
+  
+  produts_db:
+    image: postgres:14-alpine
+    container_name: produts_db
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: pass
+      POSTGRES_DB: produts
+    ports:
+      - "5432:5432"
+    volumes:
+      - produts_db_data:/var/lib/postgresql/data
+    restart: "always"
+
+volumes:
+  produts_db_data:
