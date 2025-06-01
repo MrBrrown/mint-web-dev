@@ -1,0 +1,32 @@
+.navbar {
+  background-color: #f8f8f8;
+  padding: 10px 20px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-list {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  align-items: center;
+}
+
+.navbar-list li {
+  margin-right: 20px;
+}
+
+.navbar-login {
+  margin-left: auto; /* отталкиваем вправо */
+}
+
+.navbar a {
+  text-decoration: none;
+  color: #333;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+
+.navbar a.active {
+  color: #5b7bfa;
+}

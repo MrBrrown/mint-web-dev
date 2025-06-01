@@ -4,8 +4,9 @@ import Navbar from './components/Navbar';
 import Home from './pages/Home';
 import Product from './pages/Product';
 import Cart from './pages/Cart';
-import Contacts from './pages/Contacts';
 import Order from './pages/Order';
+import LoginPage from './pages/Login'
+import AdminPage from './pages/Admin'
 
 export default function App() {
   return (
@@ -13,9 +14,10 @@ export default function App() {
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
+         <Route path="/login" element={<LoginPage />} />
+         <Route path="/admin" element={<AdminPage />} />
         <Route path="/product/:id" element={<Product />} />
         <Route path="/cart" element={<Cart />} />
-        <Route path="/contacts" element={<Contacts />} />
         <Route path="/order" element={<Order />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>

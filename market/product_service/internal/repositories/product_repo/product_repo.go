@@ -3,6 +3,7 @@ package productrepo
 import (
 	"database/sql"
 	"encoding/json"
+	"fmt"
 )
 
 type ProductRepo interface {
@@ -31,12 +32,17 @@ func (r *productRepoImpl) CreateProduct(product Product) (Product, error) {
 	var p Product
 	var rawAttrs []byte
 
-	err := r.db.QueryRow(
+	attrJSON, err := json.Marshal(product.Attributes)
+	if err != nil {
+		return Product{}, fmt.Errorf("failed to marshal attributes: %w", err)
+	}
+
+	err = r.db.QueryRow(
 		query,
 		product.Name,
 		product.Description,
 		product.Price,
-		product.Attributes,
+		attrJSON,
 	).Scan(
 		&p.ID,
 		&p.Name,
@@ -57,7 +63,6 @@ func (r *productRepoImpl) CreateProduct(product Product) (Product, error) {
 	return p, nil
 }
 
-// GetProduct возвращает продукт по id
 func (r *productRepoImpl) GetProduct(id uint) (Product, error) {
 	const query = `
 		SELECT id, name, description, price, attributes, created_at, updated_at
@@ -87,7 +92,6 @@ func (r *productRepoImpl) GetProduct(id uint) (Product, error) {
 	return p, nil
 }
 
-// UpdateProduct обновляет все поля продукта и возвращает обновлённый объект
 func (r *productRepoImpl) UpdateProduct(id uint, product Product) (Product, error) {
 	const query = `
 		UPDATE products
@@ -101,14 +105,20 @@ func (r *productRepoImpl) UpdateProduct(id uint, product Product) (Product, erro
 		RETURNING id, name, description, price, attributes, created_at, updated_at`
 
 	var p Product
+
 	var rawAttrs []byte
 
-	err := r.db.QueryRow(
+	attrJSON, err := json.Marshal(product.Attributes)
+	if err != nil {
+		return Product{}, fmt.Errorf("failed to marshal attributes: %w", err)
+	}
+
+	err = r.db.QueryRow(
 		query,
 		product.Name,
 		product.Description,
 		product.Price,
-		product.Attributes,
+		attrJSON,
 		id,
 	).Scan(
 		&p.ID,
@@ -147,7 +157,7 @@ func (r *productRepoImpl) GetProduts() ([]Product, error) {
 	}
 	defer rows.Close()
 
-	var list []Product
+	list := make([]Product, 0)
 	for rows.Next() {
 		var p Product
 		var rawAttrs []byte

@@ -1,0 +1,11 @@
+bin_addr: :8089
+
+db:
+  host: orders_db
+  port: 5432
+  login: user
+  pass: pass
+  db: orders
+  sslmode: disable
+
+secret: MY_SECRET_JWT

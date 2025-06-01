@@ -1,9 +1,11 @@
 bin_addr: :8088
 
 db:
-  host: produts_db
+  host: products_db
   port: 5432
   login: user
   pass: pass
-  db: produts
+  db: products
   sslmode: disable
+
+secret: MY_SECRET_JWT

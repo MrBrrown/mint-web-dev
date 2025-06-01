@@ -25,7 +25,7 @@ func main() {
 	cacheRepo := productrepo.NewCacheRepo(productRepo, 10*time.Minute)
 	productUC := productusecase.New(cacheRepo)
 
-	handler := transport.New(productUC)
+	handler := transport.New(productUC, cnf.JWTSecret)
 	router := server.NewRouter(handler)
 
 	if err := server.Run(cnf.BinAddr, router); err != nil {

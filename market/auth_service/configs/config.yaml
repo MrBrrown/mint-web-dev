@@ -1,0 +1,11 @@
+bin_addr: :8081
+
+db:
+  host: auth_db
+  port: 5432
+  login: user
+  pass: pass
+  db: auth
+  sslmode: disable
+
+secret: MY_SECRET_JWT

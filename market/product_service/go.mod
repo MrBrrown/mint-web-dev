@@ -11,6 +11,7 @@ require (
 
 require (
 	github.com/ajg/form v1.5.1 // indirect
+	github.com/golang-jwt/jwt/v5 v5.2.2
 	github.com/lib/pq v1.10.9 // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect
 )

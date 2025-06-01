@@ -1,12 +1,13 @@
 proxies:
-  - url: http://products:8088
-    endpint: payment 
-  - url: http://orders:8889
-    endpint: present
+  - url: http://product:8088
+    endpint: products
+  - url: http://order:8089
+    endpint: orders
+  - url: http://auth:8081
+    endpint: auth
 
 server:
   address: "0.0.0.0:8080"
-  readtimeout: 5s        
-  writetimeout: 10s      
-  shutdowntime: 15s     
-    
+  readtimeout: 5s
+  writetimeout: 10s
+  shutdowntime: 15s

@@ -1,7 +1,7 @@
-import React, { useEffect, useState, useContext } from 'react';
-import { useParams } from 'react-router-dom';
-import { CartContext } from '../contexts/CartContext';
-import { fetchProductById } from '../api';
+import React, { useEffect, useState, useContext } from "react";
+import { useParams } from "react-router-dom";
+import { CartContext } from "../contexts/CartContext";
+import { fetchProductById } from "../api";
 
 export default function Product() {
   const { id } = useParams();
@@ -21,7 +21,20 @@ export default function Product() {
         <h1>{product.name}</h1>
         <p>{product.description}</p>
         <p>{product.cost} ₽</p>
-        <button className="res-submit-btn" onClick={() => addToCart(product.id)}>
+        <div>
+          <h3>Характеристики:</h3>
+          <ul>
+            {Object.entries(product.attribs).map(([key, value]) => (
+              <li key={key}>
+                <strong>{key}:</strong> {value}
+              </li>
+            ))}
+          </ul>
+        </div>
+        <button
+          className="res-submit-btn"
+          onClick={() => addToCart(product.id)}
+        >
           В корзину
         </button>
       </div>

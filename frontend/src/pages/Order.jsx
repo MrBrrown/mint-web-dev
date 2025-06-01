@@ -19,15 +19,39 @@ export default function Order() {
 
   const handleChange = (e) =>
     setForm((f) => ({ ...f, [e.target.name]: e.target.value }));
-  const handleSubmit = (e) => {
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
+
     const items = Object.entries(cart).map(([id, qty]) => ({
-      product_id: parseInt(id),
+      id: parseInt(id),
       quantity: qty,
     }));
-    console.log("Mock send order:", { customer: form, items });
-    setOrderNum(Math.floor(Math.random() * 100000));
-    clearCart();
+
+    const orderPayload = {
+      items,
+      user_info: form,
+      status: "pending",
+    };
+
+    try {
+      const res = await fetch("/orders", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(orderPayload),
+      });
+
+      if (!res.ok) throw new Error("Ошибка при отправке заказа");
+
+      const data = await res.json();
+      setOrderNum(data.id);
+      clearCart();
+    } catch (err) {
+      console.error("Ошибка создания заказа:", err);
+      alert("Не удалось оформить заказ. Попробуйте позже.");
+    }
   };
 
   if (orderNum)
@@ -63,6 +87,7 @@ export default function Order() {
             required
           />
         </div>
+
         <div className="form-group">
           <label htmlFor="phone">Телефон:</label>
           <input
