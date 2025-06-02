@@ -101,27 +101,35 @@ export default function ProductsTab() {
             </tr>
           </thead>
           <tbody>
-            {products.map((p) => (
-              <tr key={p.id}>
-                <td>{p.name}</td>
-                <td>{p.desc}</td>
-                <td>{p.price} ₽</td>
-                <td>{p.id}</td>
-                <td className="actions">
-                  <div>
-                    <button onClick={() => handleView(p)} title="Просмотр">
-                      <span className="material-icons">visibility</span>
-                    </button>
-                    <button onClick={() => handleEdit(p)} title="Редактировать">
-                      <span className="material-icons">edit</span>
-                    </button>
-                    <button onClick={() => handleDelete(p.id)} title="Удалить">
-                      <span className="material-icons">delete</span>
-                    </button>
-                  </div>
-                </td>
-              </tr>
-            ))}
+            {[...products]
+              .sort((a, b) => a.id - b.id)
+              .map((p) => (
+                <tr key={p.id}>
+                  <td>{p.name}</td>
+                  <td>{p.desc}</td>
+                  <td>{p.price} ₽</td>
+                  <td>{p.id}</td>
+                  <td className="actions">
+                    <div>
+                      <button onClick={() => handleView(p)} title="Просмотр">
+                        <span className="material-icons">visibility</span>
+                      </button>
+                      <button
+                        onClick={() => handleEdit(p)}
+                        title="Редактировать"
+                      >
+                        <span className="material-icons">edit</span>
+                      </button>
+                      <button
+                        onClick={() => handleDelete(p.id)}
+                        title="Удалить"
+                      >
+                        <span className="material-icons">delete</span>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              ))}
           </tbody>
         </table>
       )}

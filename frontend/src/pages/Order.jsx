@@ -28,6 +28,11 @@ export default function Order() {
       quantity: qty,
     }));
 
+    if (items.length === 0) {
+      alert("Корзина пуста. Добавьте товары перед оформлением заказа.");
+      return;
+    }
+
     const orderPayload = {
       items,
       user_info: form,
@@ -35,7 +40,7 @@ export default function Order() {
     };
 
     try {
-      const res = await fetch("/orders", {
+      const res = await fetch("/orders/", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
